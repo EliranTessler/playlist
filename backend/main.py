@@ -8,11 +8,14 @@ from playlists import playlist_ns
 from songs import songs_ns
 from auth import auth_ns
 from config import TestConfig
+from flask_cors import CORS
 
 
 def create_app(config):
     app = Flask(__name__)
     app.config.from_object(config)
+
+    CORS(app)
 
     if config is not TestConfig:
         db.init_app(app)
