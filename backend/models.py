@@ -7,9 +7,9 @@ auth_ns = Namespace('auth', description="A namespace for Authentication")
 songs_ns = Namespace('song', description="A namespace for Song")
 
 class Song(db.Model):
-    id=db.Column(db.Integer(), primary_key=True)
-    name=db.Column(db.String(), nullable=False)
-    playlist_id=db.Column(db.Integer, db.ForeignKey("playlist.id"))
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(), nullable=False)
+    playlist_id = db.Column(db.Integer, db.ForeignKey("playlist.id"))
 
     def __repr__(self):
         return f"<Song {self.name} >"
@@ -27,13 +27,13 @@ class Song(db.Model):
         db.session.commit()
 
 class Playlist(db.Model):
-    id=db.Column(db.Integer(), primary_key=True)
-    name=db.Column(db.String(), nullable=False)
-    songs=db.relationship(
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(), nullable=False)
+    songs = db.relationship(
         "Song", 
-        backref="playlist",
-        cascade="all, delete, delete-orphan",
-        single_parent=True
+        backref = "playlist",
+        cascade = "all, delete, delete-orphan",
+        single_parent = True
     )
 
     def __repr__(self):
@@ -53,10 +53,10 @@ class Playlist(db.Model):
 
 
 class User(db.Model):
-    id=db.Column(db.Integer, primary_key=True)
-    username=db.Column(db.String(25), nullable=False, unique=True)
-    email=db.Column(db.String(80), nullable=False)
-    password=db.Column(db.Text(), nullable=False)
+    id = db.Column(db.Integer, primary_key = True)
+    username = db.Column(db.String(25), nullable = False, unique = True)
+    email = db.Column(db.String(80), nullable = False)
+    password = db.Column(db.Text(), nullable = False)
 
     def __repr__(self):
         return f"<User {self.username}>"
@@ -66,7 +66,7 @@ class User(db.Model):
         db.session.commit()
 
 
-song_model=songs_ns.model(
+song_model = songs_ns.model(
     "Song",
     {
        "id":fields.Integer(),
@@ -75,7 +75,7 @@ song_model=songs_ns.model(
     }
 )
 
-playlist_model=playlist_ns.model(
+playlist_model = playlist_ns.model(
      "Playlist",
      {
         "id":fields.Integer(), 
@@ -84,7 +84,7 @@ playlist_model=playlist_ns.model(
      }
 )
 
-signup_model=auth_ns.model(
+signup_model = auth_ns.model(
     "SignUp",
     {
         "username":fields.String(),

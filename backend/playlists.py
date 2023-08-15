@@ -1,4 +1,5 @@
 from flask import request
+from flask_restful import marshal
 from flask_restx import Resource
 from models import Playlist, Song, playlist_model, playlist_ns
 from flask_jwt_extended import jwt_required
@@ -50,8 +51,8 @@ class PlaylistResource(Resource):
     @playlist_ns.marshal_with(playlist_model) 
     @jwt_required()
     def put(self, id):
-        playlist=Playlist.query.get_or_404(id)
-        data=request.get_json()
+        playlist = Playlist.query.get_or_404(id)
+        data = request.get_json()
 
         playlist.update(data.get('name'))
 
@@ -61,15 +62,11 @@ class PlaylistResource(Resource):
     @playlist_ns.marshal_with(playlist_model)
     @jwt_required()  
     def delete(self, id):
-        playlist=Playlist.query.get_or_404(id)
-
+        playlist = Playlist.query.get_or_404(id)
         playlist.delete()
-
+        
         return playlist
     
-@playlist_ns.route('/hello')
-class HelloResource(Resource):
-    def get(self):
-            return {"message":"Hello World"}
+
     
  
