@@ -1,0 +1,42 @@
+
+:root {
+    --bg-color: rgb(72, 254, 136);
+    --main-color: black;
+    --secondary-color: rgb(29, 185, 84);    
+}
+
+body {
+    color: var(--main-color);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #404040;
+}
+
+.container {
+    margin-top: 10%;
+    background-color: var(--secondary-color);
+    width: 30%;
+    border-radius: 10px;
+}
+
+.heading {
+    font-size: 3em;
+    
+}
+
+.form {
+    width: 90%;
+}
+
+.submit-button {
+    margin-top: 10px;
+    margin-left: 35%;
+}
+
+.center-link {
+    margin-left: 30%;
+}
+
+.end-notes {
+    margin-top: 5px;
+    margin-left: 20%;
+}
