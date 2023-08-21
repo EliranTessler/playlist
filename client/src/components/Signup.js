@@ -1,6 +1,6 @@
 import React, {useState} from "react"
 import { Form, Button } from 'react-bootstrap'
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 
 const SignUpPage = () => {
@@ -27,25 +27,31 @@ const SignUpPage = () => {
                         <Form.Label>Username</Form.Label>
                         <Form.Control type="text" placeholder="Your username"
                                       {...register("username", {required:true, maxLength:25})} />
-                    </Form.Group>
                     {errors.username && <span style={{color:"red"}}>Username is required</span>}
-                    <br></br> 
+                    <br></br>
+                    {/* {errors.username?.type === "maxLength" && (<span style={{ color: "red" }}>Username is too long</span>)}
+                    <br></br>  */}
+                    </Form.Group>
                     <Form.Group>
                         <Form.Label>Email</Form.Label>
                         <Form.Control type="email" placeholder="Your email"
                                       {...register("email", {required:true, maxLength:80})} />
-                    </Form.Group>
+                    {errors.email && <span style={{color:"red"}}>Email is required</span>}
+                    {/* {errors.email?.type=="maxLength" && <span style={{color:"red"}}>Email is too long, it should be less then 80 characters</span>} */}
                     <br></br>
+                    </Form.Group>
                     <Form.Group>
                         <Form.Label>Password</Form.Label>
                         <Form.Control type="password" placeholder="Your password"
                                       {...register("password", {required:true, minLength:8})} />
-                    </Form.Group>
+                    {errors.password && <span style={{color:"red"}}>Password must contain at least 8 characters </span>}
                     <br></br>
+                    </Form.Group>
                     <Form.Group>
                         <Form.Label>Confirm Password</Form.Label>
                         <Form.Control type="password" placeholder="Your password"
                                       {...register("confirmPassword", {required:true, minLength:8})}/>
+                    {errors.confirmPassword && <span style={{color:"red"}}>Password must contain at least 8 characters </span>}
                     </Form.Group>
                     <div className="submit-button">
                         <Form.Group>
