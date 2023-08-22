@@ -8,15 +8,40 @@ const SignUpPage = () => {
     const {register, watch, handleSubmit, reset, formState: { errors }} = useForm();
 
     const SubmitForm = (data) => {
-       
-        console.log(data)
-        reset()
-    }
 
-    console.log(watch("username"))
-    console.log(watch("email"))
-    console.log(watch("password"))
-    console.log(watch("confirmPassword"))
+        if (data.password === data.confirmPassword) {
+            
+            const body = {
+                username: data.username,
+                email: data.email,
+                password: data.password
+            }
+
+            const requestOptions = {
+                method: "POST",
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            }
+            
+            fetch('http://localhost:5000/auth/signup', requestOptions)
+            .then((res) => {
+                if (!res.ok) {
+                  throw new Error('Request failed');
+                }
+                return res.json();
+              })
+            .then(data => console.log(data))
+            .catch(err => console.log(err))
+            reset()
+        }
+
+        else {
+            alert("Passwords do not match")
+        }
+       
+    }
 
     return(
         <div className="container">
@@ -27,31 +52,29 @@ const SignUpPage = () => {
                         <Form.Label>Username</Form.Label>
                         <Form.Control type="text" placeholder="Your username"
                                       {...register("username", {required:true, maxLength:25})} />
-                    {errors.username && <span style={{color:"red"}}>Username is required</span>}
-                    <br></br>
-                    {/* {errors.username?.type === "maxLength" && (<span style={{ color: "red" }}>Username is too long</span>)}
-                    <br></br>  */}
+                    {errors.username?.type === "required" && <p style={{color:"red"}}><small>Username is required</small></p>}
+                    {errors.username?.type === "maxLength" && (<p style={{ color: "red" }}>Username is too long</p>)}
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>Email</Form.Label>
                         <Form.Control type="email" placeholder="Your email"
                                       {...register("email", {required:true, maxLength:80})} />
-                    {errors.email && <span style={{color:"red"}}>Email is required</span>}
-                    {/* {errors.email?.type=="maxLength" && <span style={{color:"red"}}>Email is too long, it should be less then 80 characters</span>} */}
-                    <br></br>
+                    {errors.email?.type === "required" && <p style={{color:"red"}}><small>Email is required</small></p>}
+                    {errors.email?.type === "maxLength" && <p style={{color:"red"}}><small>Email is too long</small></p>}
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>Password</Form.Label>
                         <Form.Control type="password" placeholder="Your password"
                                       {...register("password", {required:true, minLength:8})} />
-                    {errors.password && <span style={{color:"red"}}>Password must contain at least 8 characters </span>}
-                    <br></br>
+                    {errors.password?.type === "required" && <p style={{color:"red"}}><small>Password is required</small></p>}
+                    {errors.password?.type === "minLength" && <p style={{color:"red"}}><small>Password must contain at least 8 characters</small></p>}
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>Confirm Password</Form.Label>
                         <Form.Control type="password" placeholder="Your password"
                                       {...register("confirmPassword", {required:true, minLength:8})}/>
-                    {errors.confirmPassword && <span style={{color:"red"}}>Password must contain at least 8 characters </span>}
+                    {errors.confirmPassword?.type === "required" && <p style={{color:"red"}}><small>Password is required</small></p>}
+                    {errors.confirmPassword?.type === "minLength" && <p style={{color:"red"}}><small>Password must contain at least 8 characters</small></p>}
                     </Form.Group>
                     <div className="submit-button">
                         <Form.Group>

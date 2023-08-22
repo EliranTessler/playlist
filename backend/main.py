@@ -15,7 +15,7 @@ def create_app(config):
     app = Flask(__name__)
     app.config.from_object(config)
 
-    CORS(app)
+    CORS(app, origins=['http://localhost:3000'])
 
     if config is not TestConfig:
         db.init_app(app)
